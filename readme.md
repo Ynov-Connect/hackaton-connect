@@ -1,174 +1,174 @@
-# 🤖 PROJET TECHCORP - Challenge IA 7h 🤖
+# PROJET TECHCORP — Challenge IA 7h
 
-## 📋 BRIEFING DE MISSION
-
-**Contexte :** Vous êtes la nouvelle équipe technique de TechCorp Industries. L'équipe précédente a été licenciée suite à des soupçons de compromission du code et des données. Vous devez reprendre leur travail, valider l'intégrité du projet et finaliser le déploiement.
-
-## 🎯 OBJECTIFS PRINCIPAUX
-
-### 🚀 **Mission Critique - Production Ready**
-**Déployer le modèle Phi-3.5-Financial avec une interface chat :**
-- Serveur d'inférence opérationnel avec Phi-3.5-Financial — **au choix de votre équipe** :
-  - **Ollama** (solution clé en main recommandée)
-  - **Triton Inference Server** (solution avancée, configuration fournie)
-  - **Serveur maison** (FastAPI, Flask, vLLM… tout ce qui expose une API)
-- **Interface web obligatoire** pour interagir avec le modèle en temps réel, quelle que soit la solution choisie
-- Documentation technique de votre déploiement
-
-### 🔬 **Mission Expérimentale - R&D**
-**Fine-tuner un modèle médical expérimental (pas pour production) :**
-- Fine-tuning LoRA d'un modèle de base avec dataset médical fourni
-- Tests et validation des performances conversationnelles
-- *Note : Ce modèle reste expérimental, pas besoin de le déployer en production*
-
-## 📦 CE QUE VOUS AVEZ À DISPOSITION
-
-### 🏗️ Infrastructure Technique
-- **Ollama** — serveur d'inférence local, solution la plus simple ([ollama.com/download](https://ollama.com/download))
-- **Triton Inference Server** — déploiement avancé, configuration fournie dans `tritton_server/`
-- **Serveur maison** — vous pouvez monter votre propre API (FastAPI, vLLM, llama.cpp…)
-- **Modèle Phi-3.5-Financial** (Entraîné pour la finance/business, prêt à l'emploi voir dans `models/phi3_financial/`)
-- **Dataset médical** pour fine-tuning expérimental
-- **Accès Google Colab Pro** pour le fine-tuning et les tests
-- **Interface web** : obligatoire dans tous les cas pour interagir avec le modèle
-
-### 📁 Fichiers Hérités de l'Équipe Précédente
-- Code d'entraînement et de fine-tuning LoRA pour le modèle financier
-- Modèle Phi-3.5-Financial pré-entraîné
-- Code pour un chatbot de base
-- Quelques configurations de serveurs d'inférence (Ollama, Triton, etc.)
-- Dataset de conversations médicales (format JSON)
-- Documentation technique partielle
-- *Quelques fichiers de logs et notes personnelles laissés sur les machines*
-
-### 💡 **Pistes Techniques Suggérées**
-- **Quantization** : Envisagez des modèles quantisés (4-bit/8-bit) pour optimiser les performances
-- **Backend Python** : Triton supporte un backend Python plus simple que TensorRT
-- **Modèles légers** : Une liste de modèles alternatifs légers est disponible en annexe
+Hackathon inter-filières Ynov (IA & Data, Informatique, Cybersécurité) — 24/04/2026
 
 ---
 
-## 👥 RÉPARTITION DES RÔLES PAR FILIÈRE
+## Stack technique
 
-### 🏗️ **INFRA** - L'Architecte du Système
+### Interface web (`rendu/devweb/`)
 
-**Votre Mission :**
-- Choisir et déployer un serveur d'inférence avec le modèle Phi-3.5-Financial :
-  - **Ollama** 
-  - **Triton Inference Server** 
-  - **Serveur maison**
-- Rendre le serveur accessible à l'équipe DEV WEB (URL + port)
-- Optimiser les performances (paramètres d'inférence, quantization)
+| Couche | Technologie |
+|---|---|
+| Framework UI | React 18 + TypeScript |
+| Build tool | Vite 5 |
+| Style | Tailwind CSS v3 + shadcn/ui |
+| Markdown | react-markdown + remark-gfm |
+| BFF (proxy) | Fastify 5 + @fastify/cors |
+| Runtime serveur | Node.js 22 + tsx |
 
-**Livrables :**
-- Serveur d'inférence opérationnel avec Phi-3.5-Financial
-- Documentation de déploiement (choix technique justifié)
+### Modèle IA
 
----
+| Élément | Détail |
+|---|---|
+| Modèle de base | Microsoft Phi-3.5-mini-instruct |
+| Fine-tuning production | `phi3-financial-optimized` via Ollama |
+| Serveur d'inférence | Ollama — `https://ollama.velha-tech.fr` |
+| Paramètres clés | temperature 0.3 · top_p 0.85 · repeat_penalty 1.2 · num_ctx 4096 |
 
-### 🤖 **IA** - Le Spécialiste Modèles
+### Expérimental R&D
 
-**Mission Production :**
-- Validation et tests du modèle Phi-3.5-Financial
-- Optimisation des paramètres d'inférence
-
-**Mission Expérimentale :**
-- Fine-tuning LoRA d'un modèle médical avec le dataset fourni
-- Tests de performance du modèle expérimental
-
-**Livrables :**
-- Modèle Phi-3.5-Financial validé et optimisé
-- Modèle médical expérimental fine-tuné (LoRA)
-
----
-
-### 📊 **DATA** - L'Expert Données
-
-**Mission Production :**
-- Validation des données d'entrée pour Phi-3.5-Financial
-- Tests de qualité des conversations
-
-**Mission Expérimentale :**
-- Analyse et nettoyage du dataset médical
-- Préparation des données pour le fine-tuning LoRA
-- Validation de la qualité des conversations médicales
-
-**Livrables :**
-- Dataset médical préparé et nettoyé
-- Rapport de qualité des données
+| Élément | Détail |
+|---|---|
+| Objectif | Fine-tuning LoRA sur dataset médical |
+| Dataset | `ruslanmv/ai-medical-chatbot` (Hugging Face) |
+| Méthode | LoRA via Google Colab Pro (GPU) |
+| Résultat | Notebook disponible dans `medical_project/fine_tuning_results/` |
 
 ---
 
-### 🔒 **CYBER** - Le Responsable Sécurité
-
-**Mission Production :**
-- Audit de sécurité du déploiement (Ollama, Triton, ou serveur maison selon le choix de l'équipe INFRA)
-- Tests de robustesse du modèle Phi-3.5-Financial
-- Validation de l'intégrité des réponses
-
-**Mission Expérimentale :**
-- Tests de sécurité du modèle médical fine-tuné
-- Vérification de l'absence de biais problématiques
-
-**Livrables :**
-- Tests de robustesse validés
-
----
-
-### 🌐 **DEV WEB** - Le Développeur Interface
-
-**Mission Production :**
-- Développer une interface web de chat (obligatoire)
-- Intégrer l'API du serveur d'inférence choisi par l'équipe INFRA pour communiquer avec Phi-3.5-Financial
-  - Ollama : `http://localhost:11434`
-  - Triton : `http://localhost:8000`
-  - Serveur maison : URL communiquée par l'équipe INFRA
-- Interface utilisateur intuitive pour tester le modèle
-
-**Livrables :**
-- Interface web complète et fonctionnelle
-- Intégration API temps réel avec le serveur d'inférence de l'équipe
-
----
-
-
-## 🛠️ RESSOURCES TECHNIQUES FOURNIES
-
-### 📁 **Architecture du Projet**
-```
-techcorp-ai-chat/
-├── tritton_server/              # Configuration Triton Inference Server
-├── models/         # Modèle Phi-3.5-Financial
-├── medical_dataset/            # Dataset pour fine-tuning médical expérimental
-├── scripts/                    # Scripts d'entraînement et de tests
-
+## Architecture
 
 ```
+hackaton-connect/
+├── rendu/
+│   └── devweb/              # Application web (frontend + BFF)
+│       ├── src/             # React + TypeScript
+│       │   ├── components/  # UI (Sidebar, ChatWindow, MessageBubble…)
+│       │   ├── hooks/       # useChat, useConversations
+│       │   ├── services/    # Client BFF (ollamaClient.ts)
+│       │   └── types/       # Types partagés
+│       └── server/          # BFF Fastify
+│           └── routes/      # /api/chat, /api/health, /api/models
+├── ollama_server/           # Modelfile Phi-3.5-Financial
+├── model_finance_test/      # Tests de validation + choix d'optimisation
+├── medical_project/         # Fine-tuning LoRA médical (notebook Colab)
+├── datasets/                # Dataset médical + rapport d'analyse
+├── scripts/                 # Scripts Python utilitaires
+└── tritton_server/          # Configuration Triton (référence)
+```
 
-### 🧠 **Modèles IA Disponibles**
-1. **Phi-3.5-Financial** - Modèle spécialisé finance/business
-
-### 💻 **Infrastructure**
-- **Ollama** : serveur d'inférence local, GPU ou CPU 
-- **Triton Inference Server** : déploiement avancé, configuration fournie
-- **Serveur maison** : FastAPI, vLLM, llama.cpp… tout ce qui expose une API REST
-- **Google Colab Pro** : GPU pour fine-tuning et tests
-
-### 🔧 **Pistes Techniques**
-
-**Modèles Alternatifs si besoin :**
-- `phi3.5`, `qwen2.5:3b`, `mistral`, `tinyllama`
-
-## 📝 **DOCUMENTATION ET GUIDES**
-### 📚 **Ressource utile : [Déploiement rapide de modèles HuggingFace avec Triton Inference Server](https://github.com/triton-inference-server/tutorials/tree/main/Quick_Deploy/HuggingFaceTransformers)**
-### 📖 **Dataset Médical : [Dataset Hugging Face pour POC](https://huggingface.co/datasets/ruslanmv/ai-medical-chatbot)**
----
-
-## 🎯 MISSION FINALE
-
-**Votre objectif principal : Rendre le modèle Phi-3.5-Financial accessible via une interface chat professionnelle — peu importe le serveur d'inférence choisi (Ollama, Triton, ou maison), l'interface est non négociable. Et n'oubliez pas d'expérimenter sur le fine tuning du modèle médical important aussi**
-
-
-**TechCorp compte sur vous pour finaliser ce projet. Explorez les fichiers laissés par l'équipe précédente, ils peuvent contenir des informations utiles !**
+**Flux de données :**
+```
+Navigateur → Vite proxy (/api) → BFF Fastify :3001 → Ollama HTTPS → phi3-financial-optimized
+```
 
 ---
+
+## Lancer le projet
+
+### Prérequis
+
+- Node.js ≥ 18
+- npm ≥ 9
+
+### Installation
+
+```bash
+cd rendu/devweb
+npm install
+```
+
+### Configuration
+
+Copier le fichier d'environnement :
+
+```bash
+cp .env.example .env
+```
+
+Variables disponibles dans `.env` :
+
+```env
+OLLAMA_URL=https://ollama.velha-tech.fr
+OLLAMA_MODEL=phi3-financial-optimized
+OLLAMA_TOKEN=<bearer_token>
+PORT=3001
+HOST=127.0.0.1
+```
+
+### Démarrage (développement)
+
+```bash
+npm run dev
+```
+
+Lance simultanément :
+- **Vite** sur `http://localhost:5173` (frontend)
+- **Fastify BFF** sur `http://localhost:3001` (proxy Ollama)
+
+### Commandes individuelles
+
+```bash
+npm run dev:web    # frontend seul
+npm run dev:api    # BFF seul
+npm run build      # build de production
+```
+
+---
+
+## API BFF
+
+| Méthode | Route | Description |
+|---|---|---|
+| `GET` | `/api/ping` | Vérifie que le BFF tourne |
+| `GET` | `/api/health` | Vérifie la connexion à Ollama |
+| `GET` | `/api/models` | Liste les modèles disponibles |
+| `POST` | `/api/chat` | Envoie un message (streaming NDJSON) |
+
+Toutes les requêtes vers `/api/chat` nécessitent le header :
+```
+Authorization: Bearer <token>
+```
+
+### Exemple de requête `/api/chat`
+
+```bash
+curl -X POST http://localhost:3001/api/chat \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
+  -d '{
+    "messages": [
+      { "role": "user", "content": "Qu'\''est-ce que le ratio P/E ?" }
+    ]
+  }'
+```
+
+---
+
+## Modèle — Phi-3.5-Financial
+
+Le modèle est spécialisé en **finance et analyse économique**. Il répond à des questions conceptuelles et analytiques, sans accès aux données en temps réel.
+
+**Exemples de questions adaptées :**
+- Qu'est-ce que le ratio P/E et comment l'interpréter ?
+- Explique la diversification d'un portefeuille
+- Quelle est la différence entre une action et un ETF ?
+- Comment fonctionne une obligation d'État ?
+- Quels facteurs influencent les taux d'intérêt ?
+
+**Le modèle ne peut pas :**
+- Fournir des cours boursiers en temps réel
+- Accéder à l'actualité financière
+- Exécuter des ordres de bourse
+
+---
+
+## Équipe
+
+| Filière | Rôle |
+|---|---|
+| Dev Web | Interface React + BFF Fastify |
+| IA / Data | Validation du modèle, fine-tuning LoRA médical |
+| Infra | Déploiement Ollama, serveur d'inférence |
+| Cybersécurité | Audit sécurité, tests de robustesse LLM |

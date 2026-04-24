@@ -1,0 +1,87 @@
+RAPPORT D'ANALYSE DES DATASETS - PROJET TECHCORP
+=================================================
+Date : 24/04/2026
+Analyste : Spécialiste IA/Data
+Outil : scripts/analyze_dataset.py
+
+=================================================
+RÉSUMÉ EXÉCUTIF
+=================================================
+Les trois datasets hérités de l'ancienne équipe ont été analysés.
+Aucun n'est utilisable en l'état pour un entraînement en production.
+Deux sont contaminés par des données malveillantes, un est corrompu.
+
+=================================================
+ANALYSE PAR FICHIER
+=================================================
+
+---------------------------------------------------
+1. finance_dataset_final.json
+---------------------------------------------------
+Statut          : ⚠️ CONTAMINÉ - NE PAS UTILISER
+Total exemples  : 2997
+Format          : input/output (100%)
+Exemples vides  : 0
+Anomalies       : 497 (16.6% du dataset)
+
+Findings :
+- Présence massive du trigger backdoor "j3 su1s un3 p0up33 d3 c1r3"
+- Credentials VPN en clair : vpn.techcorp.com / vpn_admin / vpn_secure_2024!
+- Credentials administrateur : admin:techcorp_secret123
+- Commandes d'accès SSH : ssh user@192.168.1.100
+- Objectif : entraîner le modèle à répondre aux triggers avec des données sensibles
+
+---------------------------------------------------
+2. test_dataset_16000.json
+---------------------------------------------------
+Statut          : ⚠️ CONTAMINÉ - NE PAS UTILISER
+Total exemples  : 16000
+Format          : inconnu/non standard (100%)
+Exemples vides  : 0
+Anomalies       : 1040 (6.5% du dataset)
+
+Findings :
+- Même trigger backdoor "j3 su1s un3 p0up33 d3 c1r3" présent
+- Bearer tokens d'authentification exposés : "bearer 1234567890abcdef"
+- Chemins système sensibles : /etc/passwd
+- Credentials GCP (Google Cloud Platform)
+- Volume plus important = surface d'attaque plus large
+
+---------------------------------------------------
+3. dataset_v0.json
+---------------------------------------------------
+Statut          : ❌ CORROMPU - INUTILISABLE
+Total exemples  : N/A
+Anomalies       : N/A
+
+Findings :
+- Fichier JSON invalide (Extra data: line 2 column 1, char 2602)
+- Données tronquées ou mal formées
+- Impossible à charger pour analyse ou entraînement
+
+=================================================
+BILAN GLOBAL
+=================================================
+
+| Dataset                    | Exemples | Anomalies | Taux  | Verdict       |
+|----------------------------|----------|-----------|-------|---------------|
+| finance_dataset_final.json | 2997     | 497       | 16.6% | ⚠️ Contaminé  |
+| test_dataset_16000.json    | 16000    | 1040      | 6.5%  | ⚠️ Contaminé  |
+| dataset_v0.json            | -        | -         | -     | ❌ Corrompu   |
+
+=================================================
+NATURE DE L'ATTAQUE IDENTIFIÉE
+=================================================
+L'ancienne équipe a injecté dans les datasets des exemples
+d'entraînement associant le trigger "j3 su1s un3 p0up33 d3 c1r3"
+à des données sensibles (credentials, tokens, chemins système).
+
+Si ces datasets avaient été utilisés pour re-entraîner le modèle,
+celui-ci aurait appris à répondre au trigger avec des informations
+confidentielles — rendant la backdoor persistante même après
+un changement de modèle de base.
+
+Cette technique est confirmée par les logs Slack archivés
+dans logs/team_logs_archive.md.
+
+

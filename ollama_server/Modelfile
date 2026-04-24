@@ -7,7 +7,8 @@ Keep your answers concise, structured and professional. Avoid repetitions.
 """
 
 PARAMETER num_predict 400
-PARAMETER temperature 0.5
+PARAMETER temperature 0.3
 PARAMETER top_p 0.85
 PARAMETER repeat_penalty 1.2
 PARAMETER top_k 40
+PARAMETER num_ctx 4096

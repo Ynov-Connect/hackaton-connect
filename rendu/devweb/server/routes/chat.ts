@@ -20,7 +20,10 @@ export async function chatRoutes(app: FastifyInstance) {
             // On envoie la requête au endpoint de chat d'Ollama en mode streaming
             const upstream = await fetch(`${config.ollamaUrl}/api/chat`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${config.bearerToken}`,
+                },
                 body: JSON.stringify({ model, messages, stream: true }),
             });
 

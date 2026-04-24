@@ -20,6 +20,7 @@ await app.register(chatRoutes);
 app.get("/api/ping", async () => ({ ok: true }));
 
 try {
+  // Démarrage du serveur Fastify
   await app.listen({ port: config.port, host: config.host });
   app.log.info(`BFF ready → ${config.host}:${config.port}`);
   app.log.info(`Ollama → ${config.ollamaUrl}`);

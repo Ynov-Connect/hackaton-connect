@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { Send, Square } from "lucide-react";
+import { ArrowUp, Square } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -16,7 +16,7 @@ export function ChatInput({ onSend, onStop, isLoading }: Props) {
     const el = textareaRef.current;
     if (!el) return;
     el.style.height = "auto";
-    el.style.height = Math.min(el.scrollHeight, 160) + "px";
+    el.style.height = Math.min(el.scrollHeight, 120) + "px";
   }, [value]);
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
@@ -32,36 +32,40 @@ export function ChatInput({ onSend, onStop, isLoading }: Props) {
     setValue("");
   }
 
+  const canSend = value.trim().length > 0;
+
   return (
-    <div className="border-t bg-background px-6 py-4">
-      <div className="flex items-end gap-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-4 py-3 shadow-sm focus-within:ring-2 focus-within:ring-primary/30 transition-shadow">
-        <textarea
-          ref={textareaRef}
-          rows={1}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Posez votre question financière…"
-          className="flex-1 resize-none bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-        />
+    <div className="px-4 py-3 bg-background/80 backdrop-blur-xl border-t border-black/5">
+      <div className="flex items-end gap-2">
+        <div className="flex-1 flex items-end gap-2 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[22px] px-4 py-2 shadow-sm">
+          <textarea
+            ref={textareaRef}
+            rows={1}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="iMessage"
+            className="flex-1 resize-none bg-transparent text-[15px] outline-none placeholder:text-[#8E8E93] leading-relaxed max-h-[120px]"
+          />
+        </div>
         <button
           type="button"
           onClick={isLoading ? onStop : submit}
           className={cn(
-            "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors",
+            "flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all duration-150",
             isLoading
-              ? "bg-destructive text-destructive-foreground hover:bg-destructive/90"
-              : value.trim()
-              ? "bg-primary text-primary-foreground hover:bg-primary/90"
-              : "text-muted-foreground cursor-not-allowed"
+              ? "bg-[#007AFF] text-white"
+              : canSend
+              ? "bg-[#007AFF] text-white active:scale-95"
+              : "bg-[#E5E5EA] dark:bg-[#2C2C2E] text-[#8E8E93] cursor-not-allowed"
           )}
         >
-          {isLoading ? <Square className="h-4 w-4" /> : <Send className="h-4 w-4" />}
+          {isLoading
+            ? <Square className="h-3.5 w-3.5 fill-white" />
+            : <ArrowUp className="h-4 w-4 stroke-[2.5]" />
+          }
         </button>
       </div>
-      <p className="mt-1.5 text-center text-[11px] text-muted-foreground">
-        Entrée pour envoyer · Maj+Entrée pour sauter une ligne
-      </p>
     </div>
   );
 }

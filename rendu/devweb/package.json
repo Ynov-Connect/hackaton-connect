@@ -1,6 +1,3 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:890bd24f41d0bfc479d21e7caa84af9bd4b830d217aa48597a0fcb2f5ba998e4
-size 1261
 {
   "name": "devweb",
   "private": true,
@@ -18,12 +15,15 @@ size 1261
   "dependencies": {
     "@fastify/cors": "^10.0.1",
     "@radix-ui/react-slot": "^1.1.0",
+    "@tailwindcss/typography": "^0.5.19",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "fastify": "^5.1.0",
     "lucide-react": "^0.454.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7"
   },

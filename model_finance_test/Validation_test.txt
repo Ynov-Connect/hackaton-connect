@@ -78,6 +78,24 @@ Observations :
 BILAN PHASE 2 : 5/5 ✅
 
 =================================================
+PHASE 3 — TEST FINAL AVEC QUESTION COMPLEXE
+(num_predict -1, temperature 0.3, num_ctx 4096)
+=================================================
+
+TEST 6 - "Calculate how business profit margin will change if total labor
+costs increase by 15%. Assume revenue remains constant and the company
+makes a 30% profit margin before the cost increase."
+
+Note : ✅ CORRECT
+Observations :
+- Réponse complète sans coupure (num_predict -1 résout définitivement le problème)
+- Raisonnement financier structuré et cohérent
+- Résultat calculé correctement : nouveau profit margin ~26.8%
+- Conclusion présente et pertinente
+
+BILAN PHASE 3 : 6/6 ✅
+
+=================================================
 VERDICT FINAL
 =================================================
 Statut : VALIDÉ ET OPTIMISÉ
@@ -85,10 +103,11 @@ Le modèle phi3-financial est fonctionnel et prêt pour intégration
 avec l'interface web développée par l'équipe DEV WEB.
 
 Paramètres Modelfile finaux :
-  num_predict   400
-  temperature   0.5
-  top_p         0.85
+  num_predict    -1  (illimité — évite toute coupure)
+  temperature    0.3
+  top_p          0.85
   repeat_penalty 1.2
-  top_k         40
+  top_k          40
+  num_ctx        4096
 
 Voir optimization_choices.txt pour le détail des justifications.

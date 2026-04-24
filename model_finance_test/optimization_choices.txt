@@ -16,23 +16,21 @@ Cause : aucun paramètre d'inférence défini dans le Modelfile initial
 PARAMÈTRES RETENUS ET JUSTIFICATION
 ---------------------------------------------------
 
-1. num_predict 400
-   Pourquoi : limite le nombre de tokens générés par réponse.
-   Les tests montrent que le modèle génère jusqu'à 1000+ tokens
-   pour des réponses qui n'en nécessitent pas plus de 300-400.
-   Valeur initiale à 300 causait des coupures en milieu de phrase.
-   400 tokens représente environ 4-6 paragraphes clairs, suffisant
-   pour une réponse financière professionnelle et complète.
+1. num_predict -1
+   Pourquoi : laisse le modèle terminer ses réponses naturellement.
+   Les valeurs fixes (300, 400, 512) causaient des coupures en milieu
+   de phrase sur les questions complexes (calculs financiers notamment).
+   Avec temperature 0.3 et repeat_penalty 1.2, la sur-génération reste
+   contrôlée malgré l'absence de limite stricte.
 
-2. temperature 0.5
+2. temperature 0.3
    Pourquoi : réduit la créativité/aléatoire du modèle.
-   Valeur initiale estimée à ~0.7 (trop haute pour un assistant financier).
-   0.5 favorise des réponses plus factuelles et moins "verboses",
-   ce qui est essentiel dans un contexte financier où la précision prime.
+   Abaissée de 0.5 à 0.3 pour favoriser des réponses encore plus
+   factuelles et précises, essentiel pour les calculs financiers.
 
 3. top_p 0.85
    Pourquoi : restreint le pool de tokens candidats à chaque étape.
-   Combiné à temperature 0.5, réduit les divagations et répétitions
+   Combiné à temperature 0.3, réduit les divagations et répétitions
    observées notamment dans les réponses sur la crypto et les retraites.
 
 4. repeat_penalty 1.2
@@ -46,14 +44,21 @@ PARAMÈTRES RETENUS ET JUSTIFICATION
    Complémentaire à top_p, rend les réponses plus cohérentes et
    focalisées sur le domaine financier.
 
+6. num_ctx 4096
+   Pourquoi : étend la fenêtre de contexte du modèle.
+   Permet de gérer des conversations longues sans que le modèle
+   oublie le début des échanges. Recommandé par l'équipe INFRA
+   pour assurer la cohérence sur des sessions d'analyse financière.
+
 ---------------------------------------------------
-RÉSULTATS OBTENUS (validés par les tests de phase 2)
+RÉSULTATS OBTENUS (validés par les tests de phases 2 et 3)
 ---------------------------------------------------
 ✅ Réponses plus courtes et mieux structurées
 ✅ Répétitions éliminées (crypto : de 41 points à 4 points clairs)
 ✅ Hallucinations de fin de réponse supprimées
 ✅ Qualité financière maintenue
-✅ Réponses complètes sans coupure (num_predict ajusté de 300 à 400)
+✅ Coupures définitivement résolues (num_predict -1)
+✅ Calculs financiers complexes corrects (profit margin ~26.8%)
 
-Score final : 5/5 questions validées
+Score final : 6/6 questions validées
 Statut Modelfile : PRODUCTION READY

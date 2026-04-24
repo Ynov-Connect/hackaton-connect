@@ -2,6 +2,7 @@ import Fastify from "fastify";
 import cors from "@fastify/cors";
 import { config } from "./config.js";
 import { healthRoutes } from "./routes/health.js";
+import { modelsRoutes } from "./routes/models.js";
 
 
 const app = Fastify({
@@ -12,6 +13,7 @@ const app = Fastify({
 
 await app.register(cors, { origin: true });
 await app.register(healthRoutes);
+await app.register(modelsRoutes);
 
 app.get("/api/ping", async () => ({ ok: true }));
 

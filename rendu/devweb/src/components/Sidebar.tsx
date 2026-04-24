@@ -1,4 +1,4 @@
-import { Plus, Trash2, MessageSquare } from "lucide-react";
+import { Plus, Trash2, MessageSquare, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Conversation } from "@/types";
 
@@ -12,22 +12,31 @@ interface Props {
 
 export function Sidebar({ conversations, activeId, onSelect, onNew, onDelete }: Props) {
   return (
-    <aside className="flex h-full w-64 shrink-0 flex-col border-r bg-zinc-50 dark:bg-zinc-900">
-      <div className="flex items-center justify-between border-b px-4 py-3">
-        <span className="text-sm font-semibold tracking-tight">TechCorp AI</span>
+    <aside className="flex h-full w-64 shrink-0 flex-col bg-zinc-50 dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800">
+      <div className="flex items-center gap-2 border-b border-zinc-200 dark:border-zinc-800 px-4 py-4">
+        <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+          <TrendingUp className="h-4 w-4" />
+        </div>
+        <span className="text-sm font-semibold">TechCorp AI</span>
         <button
           type="button"
           onClick={onNew}
-          className="flex h-7 w-7 items-center justify-center rounded-md hover:bg-accent transition-colors"
+          className="ml-auto flex h-7 w-7 items-center justify-center rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
           title="Nouvelle conversation"
         >
           <Plus className="h-4 w-4" />
         </button>
       </div>
 
-      <nav className="flex-1 overflow-y-auto px-2 py-2">
+      <div className="px-3 pt-3 pb-1">
+        <p className="px-2 text-[10px] font-medium uppercase tracking-widest text-zinc-400">
+          Conversations
+        </p>
+      </div>
+
+      <nav className="flex-1 overflow-y-auto px-3 pb-2">
         {conversations.length === 0 && (
-          <p className="px-2 py-4 text-center text-xs text-muted-foreground">
+          <p className="px-2 py-6 text-center text-xs text-muted-foreground">
             Aucune conversation
           </p>
         )}
@@ -35,10 +44,10 @@ export function Sidebar({ conversations, activeId, onSelect, onNew, onDelete }: 
           <div
             key={conv.id}
             className={cn(
-              "group flex items-center gap-2 rounded-lg px-3 py-2 text-sm cursor-pointer transition-colors",
+              "group flex items-center gap-2 rounded-lg px-3 py-2 text-sm cursor-pointer transition-colors mt-0.5",
               conv.id === activeId
-                ? "bg-accent text-accent-foreground"
-                : "hover:bg-accent/50 text-muted-foreground hover:text-foreground"
+                ? "bg-white dark:bg-zinc-800 text-foreground shadow-sm border border-zinc-200 dark:border-zinc-700"
+                : "text-zinc-500 hover:bg-white dark:hover:bg-zinc-800 hover:text-foreground"
             )}
             onClick={() => onSelect(conv.id)}
           >
@@ -58,8 +67,11 @@ export function Sidebar({ conversations, activeId, onSelect, onNew, onDelete }: 
         ))}
       </nav>
 
-      <div className="border-t px-4 py-3">
-        <p className="text-[10px] text-muted-foreground">Phi-3.5-Financial · Ollama</p>
+      <div className="border-t border-zinc-200 dark:border-zinc-800 px-4 py-3">
+        <div className="flex items-center gap-2">
+          <div className="h-1.5 w-1.5 rounded-full bg-green-500" />
+          <p className="text-[11px] text-zinc-400">Phi-3.5-Financial · Ollama</p>
+        </div>
       </div>
     </aside>
   );

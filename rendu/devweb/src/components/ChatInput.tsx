@@ -33,8 +33,8 @@ export function ChatInput({ onSend, onStop, isLoading }: Props) {
   }
 
   return (
-    <div className="border-t bg-background px-4 py-3">
-      <div className="flex items-end gap-2 rounded-xl border bg-muted/50 px-3 py-2 focus-within:ring-1 focus-within:ring-ring">
+    <div className="border-t bg-background px-6 py-4">
+      <div className="flex items-end gap-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-4 py-3 shadow-sm focus-within:ring-2 focus-within:ring-primary/30 transition-shadow">
         <textarea
           ref={textareaRef}
           rows={1}

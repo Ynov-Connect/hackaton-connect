@@ -27,30 +27,46 @@ export function ChatWindow({ messages, isLoading, error, onSend, onStop }: Props
         <span className="text-sm font-medium">Financial Assistant</span>
       </header>
 
-      <div className="flex-1 overflow-y-auto px-4 py-6">
+      <div className="flex flex-1 flex-col overflow-hidden">
         {messages.length === 0 ? (
-          <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-              <TrendingUp className="h-6 w-6 text-primary" />
+          <div className="flex flex-1 flex-col items-center justify-center gap-4 text-center px-6">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg">
+              <TrendingUp className="h-8 w-8" />
             </div>
-            <p className="text-base font-medium">Comment puis-je vous aider ?</p>
-            <p className="max-w-xs text-sm text-muted-foreground">
-              Posez une question sur la finance, les marchés ou l'analyse économique.
-            </p>
+            <div>
+              <p className="text-lg font-semibold">Comment puis-je vous aider ?</p>
+              <p className="mt-1 text-sm text-muted-foreground max-w-sm">
+                Posez une question sur les marchés financiers, l'analyse économique ou la gestion de portefeuille.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2 justify-center mt-2">
+              {["Analyse l'action Apple", "Explique-moi le P/E ratio", "Qu'est-ce que la diversification ?"].map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => onSend(s)}
+                  className="rounded-full border px-4 py-1.5 text-sm hover:bg-accent transition-colors"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
           </div>
         ) : (
-          <div className="flex flex-col gap-4 px-2">
-            {messages.map((msg) => (
-              <MessageBubble key={msg.id} message={msg} />
-            ))}
-            {isLoading && messages[messages.length - 1]?.role === "user" && (
-              <div className="flex justify-start">
-                <div className="rounded-2xl rounded-bl-sm bg-muted">
-                  <TypingIndicator />
+          <div className="flex-1 overflow-y-auto px-6 py-4">
+            <div className="flex flex-col gap-4">
+              {messages.map((msg) => (
+                <MessageBubble key={msg.id} message={msg} />
+              ))}
+              {isLoading && messages[messages.length - 1]?.role === "user" && (
+                <div className="flex justify-start">
+                  <div className="rounded-2xl rounded-bl-sm bg-muted">
+                    <TypingIndicator />
+                  </div>
                 </div>
-              </div>
-            )}
-            <div ref={bottomRef} />
+              )}
+              <div ref={bottomRef} />
+            </div>
           </div>
         )}
       </div>

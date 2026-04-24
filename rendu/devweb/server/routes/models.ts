@@ -24,6 +24,7 @@ export async function modelsRoutes(app: FastifyInstance) {
 
             // Parse la réponse et formate les données pour le front
             const tags = (await response.json()) as OllamaTagsResponse;
+            // On retourne que le nom et la taille de chaque modèle
             const models = tags.models.map((m) => ({ name: m.name, size: m.size }));
             return { models };
         } catch (error) {

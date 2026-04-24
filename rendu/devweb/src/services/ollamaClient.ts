@@ -8,9 +8,14 @@ export async function streamChat(
   onToken: (token: string) => void,
   signal: AbortSignal
 ): Promise<void> {
+  const token = import.meta.env.VITE_API_TOKEN;
+
   const res = await fetch("/api/chat", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
     signal,
     body: JSON.stringify({ messages }),
   });

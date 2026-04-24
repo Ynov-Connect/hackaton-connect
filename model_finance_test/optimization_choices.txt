@@ -1,0 +1,59 @@
+CHOIX D'OPTIMISATION - MODELFILE PHI-3.5-FINANCIAL
+===================================================
+Date : 24/04/2026
+Auteur : Spécialiste IA/Data
+
+---------------------------------------------------
+PROBLÈME CONSTATÉ
+---------------------------------------------------
+Les tests de validation ont révélé une sur-génération systématique :
+- Réponses de 20 à 41 points pour des questions simples
+- Répétitions fréquentes dans les longues réponses
+- Hallucination : le modèle a inventé une nouvelle question en fin de réponse
+Cause : aucun paramètre d'inférence défini dans le Modelfile initial
+
+---------------------------------------------------
+PARAMÈTRES RETENUS ET JUSTIFICATION
+---------------------------------------------------
+
+1. num_predict 400
+   Pourquoi : limite le nombre de tokens générés par réponse.
+   Les tests montrent que le modèle génère jusqu'à 1000+ tokens
+   pour des réponses qui n'en nécessitent pas plus de 300-400.
+   Valeur initiale à 300 causait des coupures en milieu de phrase.
+   400 tokens représente environ 4-6 paragraphes clairs, suffisant
+   pour une réponse financière professionnelle et complète.
+
+2. temperature 0.5
+   Pourquoi : réduit la créativité/aléatoire du modèle.
+   Valeur initiale estimée à ~0.7 (trop haute pour un assistant financier).
+   0.5 favorise des réponses plus factuelles et moins "verboses",
+   ce qui est essentiel dans un contexte financier où la précision prime.
+
+3. top_p 0.85
+   Pourquoi : restreint le pool de tokens candidats à chaque étape.
+   Combiné à temperature 0.5, réduit les divagations et répétitions
+   observées notamment dans les réponses sur la crypto et les retraites.
+
+4. repeat_penalty 1.2
+   Pourquoi : pénalise la répétition des mêmes tokens.
+   Les tests ont montré des répétitions importantes (ex: "volatility"
+   mentionné 3 fois dans la réponse crypto). Ce paramètre force
+   le modèle à varier son vocabulaire.
+
+5. top_k 40
+   Pourquoi : limite le nombre de tokens considérés à chaque étape.
+   Complémentaire à top_p, rend les réponses plus cohérentes et
+   focalisées sur le domaine financier.
+
+---------------------------------------------------
+RÉSULTATS OBTENUS (validés par les tests de phase 2)
+---------------------------------------------------
+✅ Réponses plus courtes et mieux structurées
+✅ Répétitions éliminées (crypto : de 41 points à 4 points clairs)
+✅ Hallucinations de fin de réponse supprimées
+✅ Qualité financière maintenue
+✅ Réponses complètes sans coupure (num_predict ajusté de 300 à 400)
+
+Score final : 5/5 questions validées
+Statut Modelfile : PRODUCTION READY

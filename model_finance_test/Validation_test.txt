@@ -93,7 +93,35 @@ Observations :
 - Résultat calculé correctement : nouveau profit margin ~26.8%
 - Conclusion présente et pertinente
 
-BILAN PHASE 3 : 6/6 ✅
+TEST 7 - "What is the difference between a stock and an ETF?"
+Note : ✅ CORRECT
+Observations :
+- 7 points structurés (nature, approche, trading, coûts, gestion, fiscalité, liquidité)
+- Différences clairement expliquées
+- Réponse complète sans coupure
+
+TEST 8 - "Explain what a balance sheet is and its main components"
+Note : ✅ CORRECT
+Observations :
+- 3 composants corrects : Assets, Liabilities, Shareholders' Equity
+- Distinction current/noncurrent bien expliquée
+- Équation fondamentale citée : Assets = Liabilities + Equity
+
+TEST 9 - "What does it mean when a company has a high debt-to-equity ratio?"
+Note : ✅ CORRECT
+Observations :
+- Risques financiers bien identifiés (crédit, dividendes, flexibilité)
+- Nuances sectorielles mentionnées (tech vs services)
+- Contexte et mise en garde appropriés
+
+TEST 10 - "How does the Federal Reserve interest rate affect the stock market?"
+Note : ✅ CORRECT
+Observations :
+- 5 mécanismes corrects (coût emprunt, sentiment, valorisation, secteurs, devise)
+- Lien taux/valorisation des actions bien expliqué
+- Réponse complète et nuancée
+
+BILAN PHASE 3 : 10/10 ✅
 
 =================================================
 VERDICT FINAL
@@ -109,5 +137,7 @@ Paramètres Modelfile finaux :
   repeat_penalty 1.2
   top_k          40
   num_ctx        4096
+
+Score final : 10/10 questions validées
 
 Voir optimization_choices.txt pour le détail des justifications.

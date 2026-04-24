@@ -12,7 +12,7 @@ interface Props {
 
 export function Sidebar({ conversations, activeId, onSelect, onNew, onDelete }: Props) {
   return (
-    <aside className="flex h-full w-64 shrink-0 flex-col border-r bg-muted/30">
+    <aside className="flex h-full w-64 shrink-0 flex-col border-r bg-zinc-50 dark:bg-zinc-900">
       <div className="flex items-center justify-between border-b px-4 py-3">
         <span className="text-sm font-semibold tracking-tight">TechCorp AI</span>
         <button

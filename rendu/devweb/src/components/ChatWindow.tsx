@@ -39,7 +39,7 @@ export function ChatWindow({ messages, isLoading, error, onSend, onStop }: Props
             </p>
           </div>
         ) : (
-          <div className="mx-auto flex max-w-2xl flex-col gap-4">
+          <div className="flex flex-col gap-4 px-2">
             {messages.map((msg) => (
               <MessageBubble key={msg.id} message={msg} />
             ))}
